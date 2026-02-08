@@ -1,4 +1,6 @@
 databaseChangeLog:
+- includeAll:
+    path: src/main/resources/db/changelog/changelogs/
 - changeSet:
     id: 1770400696382-1
     author: sirmam (generated)
