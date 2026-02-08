@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1770564791043-1
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: createdDate
+                  type: timestamp(6)
+            tableName: OrderHeader
