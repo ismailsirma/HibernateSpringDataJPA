@@ -2,6 +2,7 @@ package sirmam.springdatajpa.domain;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -14,6 +15,9 @@ public abstract class BaseEntity {
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdDate;
+
+    @UpdateTimestamp
+    private Timestamp updatedDate;
 
     public Long getId() {
         return id;
@@ -31,19 +35,30 @@ public abstract class BaseEntity {
         this.createdDate = createdDate;
     }
 
+    public Timestamp getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Timestamp updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BaseEntity that)) return false;
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        return getCreatedDate() != null ? getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() == null;
+        if (getCreatedDate() != null ? !getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() != null)
+            return false;
+        return getUpdatedDate() != null ? getUpdatedDate().equals(that.getUpdatedDate()) : that.getUpdatedDate() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
+        result = 31 * result + (getUpdatedDate() != null ? getUpdatedDate().hashCode() : 0);
         return result;
     }
 }
