@@ -1,91 +1,70 @@
 package sirmam.springdatajpa.dao;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import sirmam.springdatajpa.domain.Book;
+import sirmam.springdatajpa.repositories.BookRepository;
 
 import java.util.List;
 
 @Component
 public class BookDaoImpl implements BookDao {
-    private final EntityManagerFactory emf;
+    private final BookRepository bookRepository;
 
-    public BookDaoImpl(EntityManagerFactory emf) {
-        this.emf = emf;
+    public BookDaoImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
     @Override
     public List<Book> findAllBooksSortByTitle(Pageable pageable) {
-        return null;
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+
+        return bookPage.getContent();
     }
 
     @Override
     public List<Book> findAllBooks(Pageable pageable) {
-        return null;
+        return bookRepository.findAll(pageable).getContent();
     }
 
     @Override
     public List<Book> findAllBooks() {
-        return null;
+        return bookRepository.findAll();
     }
 
     @Override
     public Book getById(Long id) {
-        EntityManager em = getEntityManager();
-        Book book = getEntityManager().find(Book.class, id);
-        em.close();
-        return book;
+        return bookRepository.getById(id);
     }
 
     @Override
     public Book findBookByTitle(String title) {
-        EntityManager em = getEntityManager();
-        TypedQuery<Book> query = em
-                .createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
-        query.setParameter("title", title);
-        Book book = query.getSingleResult();
-        em.close();
-        return book;
+        return bookRepository.findBookByTitle(title).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Book saveNewBook(Book book) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.persist(book);
-        em.flush();
-        em.getTransaction().commit();
-        em.close();
-        return book;
+        return bookRepository.save(book);
     }
 
+
+    @Transactional
     @Override
     public Book updateBook(Book book) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.merge(book);
-        em.flush();
-        em.clear();
-        Book savedBook = em.find(Book.class, book.getId());
-        em.getTransaction().commit();
-        em.close();
-        return savedBook;
+        Book foundBook = bookRepository.getById(book.getId());
+        foundBook.setIsbn(book.getIsbn());
+        foundBook.setPublisher(book.getPublisher());
+        foundBook.setAuthorId(book.getAuthorId());
+        foundBook.setTitle(book.getTitle());
+        return bookRepository.save(foundBook);
     }
 
     @Override
     public void deleteBookById(Long id) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        Book book = em.find(Book.class, id);
-        em.remove(book);
-        em.getTransaction().commit();
-        em.close();
+        bookRepository.deleteById(id);
     }
 
-    private EntityManager getEntityManager(){
-        return emf.createEntityManager();
-    }
 }
