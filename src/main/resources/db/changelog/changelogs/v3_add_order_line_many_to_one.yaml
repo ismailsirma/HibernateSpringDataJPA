@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771265578647-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: OrderLinePK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: createdDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updatedDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: quantityOrdered
+                  type: INTEGER
+              - column:
+                  name: orderHeader_id
+                  type: BIGINT
+            tableName: OrderLine
+  - changeSet:
+      id: 1771265578647-2
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: orderHeader_id
+            baseTableName: OrderLine
+            constraintName: FKm8ehyvp3s3gsgmh1iba0wcgmp
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: OrderHeader
+            validate: true
+

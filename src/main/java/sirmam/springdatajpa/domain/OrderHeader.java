@@ -2,6 +2,8 @@ package sirmam.springdatajpa.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 @AttributeOverrides({
@@ -40,6 +42,9 @@ public class OrderHeader extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @OneToMany(mappedBy = "orderHeader")
+    private Set<OrderLine> orderlines;
+
     public String getCustomer() {
         return customer;
     }
@@ -72,6 +77,14 @@ public class OrderHeader extends BaseEntity {
         this.orderStatus = orderStatus;
     }
 
+    public Set<OrderLine> getOrderlines() {
+        return orderlines;
+    }
+
+    public void setOrderlines(Set<OrderLine> orderlines) {
+        this.orderlines = orderlines;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,7 +97,8 @@ public class OrderHeader extends BaseEntity {
             return false;
         if (getBillToAddress() != null ? !getBillToAddress().equals(that.getBillToAddress()) : that.getBillToAddress() != null)
             return false;
-        return getOrderStatus() == that.getOrderStatus();
+        if (getOrderStatus() != that.getOrderStatus()) return false;
+        return getOrderlines() != null ? getOrderlines().equals(that.getOrderlines()) : that.getOrderlines() == null;
     }
 
     @Override
@@ -94,6 +108,7 @@ public class OrderHeader extends BaseEntity {
         result = 31 * result + (getShippingAddress() != null ? getShippingAddress().hashCode() : 0);
         result = 31 * result + (getBillToAddress() != null ? getBillToAddress().hashCode() : 0);
         result = 31 * result + (getOrderStatus() != null ? getOrderStatus().hashCode() : 0);
+        result = 31 * result + (getOrderlines() != null ? getOrderlines().hashCode() : 0);
         return result;
     }
 
@@ -104,6 +119,7 @@ public class OrderHeader extends BaseEntity {
                 ", shippingAddress=" + shippingAddress +
                 ", billToAddress=" + billToAddress +
                 ", orderStatus=" + orderStatus +
+                ", orderlines=" + orderlines +
                 '}';
     }
 }
