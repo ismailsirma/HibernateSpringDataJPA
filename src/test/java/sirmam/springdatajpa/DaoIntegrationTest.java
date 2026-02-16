@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import sirmam.springdatajpa.dao.AuthorDao;
@@ -63,7 +64,7 @@ public class DaoIntegrationTest {
         author.setLastName("Wall");
         authorDao.saveNewAuthor(author);
 
-        List<Author> authors = authorDao.listAuthorByLastNameLike("Wall");
+        List<Author> authors = authorDao.findAllAuthorsByLastName("Wall", Pageable.unpaged());
 
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isGreaterThan(0);

@@ -1,94 +1,53 @@
 package sirmam.springdatajpa.dao;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import sirmam.springdatajpa.domain.Author;
+import sirmam.springdatajpa.repositories.AuthorRepository;
 
 import java.util.List;
 
-public class AuthorDaoImpl implements AuthorDao{
+public class AuthorDaoImpl implements AuthorDao {
 
-    private final EntityManagerFactory emf;
+    private final AuthorRepository authorRepository;
 
-    public AuthorDaoImpl(EntityManagerFactory emf) {
-        this.emf = emf;
+    public AuthorDaoImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     @Override
-    public List<Author> listAuthorByLastNameLike(String lastName) {
-        EntityManager em = getEntityManager();
-        try {
-            Query query = em.createQuery("SELECT a from Author a where a.lastName like :last_name");
-            query.setParameter("last_name", lastName + "%");
-            List<Author> authors = query.getResultList();
-            return authors;
-        } finally {
-            em.close();
-        }
+    public List<Author> findAllAuthorsByLastName(String lastName, Pageable pageable) {
+        return authorRepository.findAuthorByLastName(lastName, Pageable.unpaged()).getContent();
     }
 
     @Override
     public Author getById(Long id) {
-        EntityManager em = getEntityManager();
-        Author author = getEntityManager().find(Author.class, id);
-        em.close();
-        return author;
+        return authorRepository.getById(id);
     }
 
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        EntityManager em = getEntityManager();
-        TypedQuery<Author> query = em.createQuery("SELECT a FROM Author a " +
-                "WHERE a.firstName = :first_name and a.lastName = :last_name", Author.class);
-        query.setParameter("first_name", firstName);
-        query.setParameter("last_name", lastName);
-
-        Author author = query.getSingleResult();
-        em.close();
-        return author;
+        return authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Author saveNewAuthor(Author author) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.persist(author);
-        em.flush();
-        em.getTransaction().commit();
-        em.close();
-        return author;
+        return authorRepository.save(author);
     }
 
+    @Transactional
     @Override
     public Author updateAuthor(Author author) {
-        EntityManager em = getEntityManager();
-
-        try {
-            em.joinTransaction();
-            em.merge(author);
-            em.flush();
-            em.clear();
-            Author saveAuthor = em.find(Author.class, author.getId());
-            return saveAuthor;
-        } finally {
-            em.close();
-        }
+        Author foundAuthor = authorRepository.getById(author.getId());
+        foundAuthor.setFirstName(author.getFirstName());
+        foundAuthor.setLastName(author.getLastName());
+        return authorRepository.save(foundAuthor);
     }
 
     @Override
     public void deleteAuthorById(Long id) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        Author author = em.find(Author.class, id);
-        em.remove(author);
-        em.flush();
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    private EntityManager getEntityManager(){
-        return emf.createEntityManager();
+        authorRepository.deleteById(id);
     }
 }
