@@ -11,8 +11,6 @@ import sirmam.springdatajpa.domain.OrderLine;
 import sirmam.springdatajpa.domain.Product;
 import sirmam.springdatajpa.domain.ProductStatus;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
@@ -45,9 +43,7 @@ class OrderHeaderRepositoryTest {
         orderLine.setQuantityOrdered(5);
         orderLine.setProduct(product);
 
-        orderHeader.setOrderlines(Set.of(orderLine));
-        // inversely assign the relation
-        orderLine.setOrderHeader(orderHeader);
+        orderHeader.addOrderLine(orderLine);
 
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 

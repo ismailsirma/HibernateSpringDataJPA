@@ -2,6 +2,7 @@ package sirmam.springdatajpa.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -43,7 +44,18 @@ public class OrderHeader extends BaseEntity {
     private OrderStatus orderStatus;
 
     @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
-    private Set<OrderLine> orderlines;
+    private Set<OrderLine> orderLines;
+
+    public void addOrderLine(OrderLine orderLine) {
+        if (orderLines == null) {
+            orderLines = new HashSet<>();
+        }
+
+        orderLines.add(orderLine);
+        // enforce relationship association
+        // inversely assign the relation
+        orderLine.setOrderHeader(this);
+    }
 
     public String getCustomer() {
         return customer;
@@ -78,11 +90,11 @@ public class OrderHeader extends BaseEntity {
     }
 
     public Set<OrderLine> getOrderlines() {
-        return orderlines;
+        return orderLines;
     }
 
     public void setOrderlines(Set<OrderLine> orderlines) {
-        this.orderlines = orderlines;
+        this.orderLines = orderlines;
     }
 
     @Override
@@ -119,7 +131,7 @@ public class OrderHeader extends BaseEntity {
                 ", shippingAddress=" + shippingAddress +
                 ", billToAddress=" + billToAddress +
                 ", orderStatus=" + orderStatus +
-                ", orderlines=" + orderlines +
+                ", orderLines=" + orderLines +
                 '}';
     }
 }
