@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771446209529-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ProductPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: createdDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updatedDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: productStatus
+                  type: VARCHAR(255)
+            tableName: Product
+  - changeSet:
+      id: 1771446209529-2
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: product_id
+                  type: bigint
+            tableName: OrderLine
+  - changeSet:
+      id: 1771446209529-3
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: OrderLine
+            constraintName: FKcd21nky7xowxkcxheatk1hru6
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: Product
+            validate: true
+
