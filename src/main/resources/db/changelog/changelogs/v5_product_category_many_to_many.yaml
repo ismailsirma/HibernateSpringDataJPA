@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771705726065-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: CategoryPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: createdDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updatedDate
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+            tableName: Category
+  - changeSet:
+      id: 1771705726065-2
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: product_categoryPK
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: product_categoryPK
+                  name: category_id
+                  type: BIGINT
+            tableName: product_category
+  - changeSet:
+      id: 1771705726065-3
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: product_category
+            constraintName: FKja2hwfcn4uqknuehnveejoo0v
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: Product
+            validate: true
+  - changeSet:
+      id: 1771705726065-4
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: product_category
+            constraintName: FKpcmsq096b3sna4u2p9xnxlmgf
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: Category
+            validate: true
+

@@ -6,5 +6,5 @@ import sirmam.springdatajpa.domain.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-
+    Product findByDescription(String description);
 }

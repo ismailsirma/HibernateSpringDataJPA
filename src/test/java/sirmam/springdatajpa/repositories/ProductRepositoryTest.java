@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import sirmam.springdatajpa.domain.Category;
 import sirmam.springdatajpa.domain.Product;
 import sirmam.springdatajpa.domain.ProductStatus;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -17,6 +20,26 @@ public class ProductRepositoryTest {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Test
+    void testGetCategory() {
+        Product newProduct = new Product();
+        newProduct.setDescription("PRODUCT1");
+        newProduct.setProductStatus(ProductStatus.NEW);
+
+        Category category = new Category();
+        category.setDescription("CATEGORY1");
+        Category category2 = new Category();
+        category2.setDescription("CATEGORY2");
+        newProduct.setCategories(Set.of(category, category2));
+
+        productRepository.save(newProduct);
+
+        Product product = productRepository.findByDescription("PRODUCT1");
+
+        assertNotNull(product);
+        assertNotNull(product.getCategories());
+    }
 
     @Test
     void testSaveProduct() {
