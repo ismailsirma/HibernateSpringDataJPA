@@ -56,7 +56,9 @@ liquibase {
 			url 'jdbc:postgresql://localhost:5432/springdatajpa'
 			username 'postgres'
 			password 'root'
-			referenceUrl 'hibernate:spring:sirmam.springdatajpa.domain?dialect=org.hibernate.dialect.PostgreSQLDialect'
+			referenceUrl 'hibernate:spring:sirmam.springdatajpa.domain?dialect=org.hibernate.dialect.PostgreSQLDialect' +
+					'&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy' +
+					'&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy'
 		}
 	}
 }
