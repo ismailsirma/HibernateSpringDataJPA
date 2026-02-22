@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771792411922-4
+      author: sirmam (generated)
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: order_header
+            constraintName: FKby5nql12apc2yxa26ggmf108j
+  - changeSet:
+      id: 1771792411922-1
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: order_header_id
+                  type: bigint
+            tableName: order_approval
+  - changeSet:
+      id: 1771792411922-2
+      author: sirmam (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: order_header_id
+            constraintName: UC_ORDER_APPROVALORDER_HEADER_ID_COL
+            tableName: order_approval
+  - changeSet:
+      id: 1771792411922-3
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_header_id
+            baseTableName: order_approval
+            constraintName: FKqho7fso1o90v5ram4p7ckgqnf
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: order_header
+            validate: true
+  - changeSet:
+      id: 1771792411922-5
+      author: sirmam (generated)
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uc_order_headerorder_approval_id_col
+            tableName: order_header
+  - changeSet:
+      id: 1771792411922-6
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: order_approval_id
+            tableName: order_header
+
