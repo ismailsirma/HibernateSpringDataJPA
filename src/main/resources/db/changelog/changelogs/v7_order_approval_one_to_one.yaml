@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771769718819-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_approvalPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: approved_by
+                  type: VARCHAR(255)
+            tableName: order_approval
+  - changeSet:
+      id: 1771769718819-2
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: order_approval_id
+                  type: bigint
+            tableName: order_header
+  - changeSet:
+      id: 1771769718819-3
+      author: sirmam (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: order_approval_id
+            constraintName: UC_ORDER_HEADERORDER_APPROVAL_ID_COL
+            tableName: order_header
+  - changeSet:
+      id: 1771769718819-4
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_approval_id
+            baseTableName: order_header
+            constraintName: FKby5nql12apc2yxa26ggmf108j
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: order_approval
+            validate: true
+

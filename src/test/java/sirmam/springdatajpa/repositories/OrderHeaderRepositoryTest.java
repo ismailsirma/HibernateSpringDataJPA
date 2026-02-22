@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import sirmam.springdatajpa.domain.OrderHeader;
-import sirmam.springdatajpa.domain.OrderLine;
-import sirmam.springdatajpa.domain.Product;
-import sirmam.springdatajpa.domain.ProductStatus;
+import sirmam.springdatajpa.domain.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +20,9 @@ class OrderHeaderRepositoryTest {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    OrderApprovalRepository orderApprovalRepository;
 
     Product product;
 
@@ -44,6 +44,11 @@ class OrderHeaderRepositoryTest {
         orderLine.setProduct(product);
 
         orderHeader.addOrderLine(orderLine);
+
+        OrderApproval approval = new OrderApproval();
+        approval.setApprovedBy("me");
+        OrderApproval savedApproval = orderApprovalRepository.save(approval);
+        orderHeader.setOrderApproval(savedApproval);
 
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
