@@ -1,0 +1,319 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771753040998-36
+      author: sirmam (generated)
+      changes:
+        - renameTable:
+            newTableName: category
+            oldTableName: Category
+  - changeSet:
+      id: 1771753040998-35
+      author: sirmam (generated)
+      changes:
+        - renameTable:
+            newTableName: product
+            oldTableName: Product
+  - changeSet:
+      id: 1771753040998-15
+      author: sirmam (generated)
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: OrderLine
+            constraintName: FKcd21nky7xowxkcxheatk1hru6
+  - changeSet:
+      id: 1771753040998-16
+      author: sirmam (generated)
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: OrderLine
+            constraintName: FKm8ehyvp3s3gsgmh1iba0wcgmp
+  - changeSet:
+      id: 1771753040998-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_headerPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: city
+                  type: VARCHAR(255)
+              - column:
+                  name: state
+                  type: VARCHAR(255)
+              - column:
+                  name: zip_code
+                  type: VARCHAR(255)
+              - column:
+                  name: customer
+                  type: VARCHAR(255)
+              - column:
+                  name: order_status
+                  type: VARCHAR(255)
+              - column:
+                  name: shipping_address
+                  type: VARCHAR(255)
+              - column:
+                  name: shipping_city
+                  type: VARCHAR(255)
+              - column:
+                  name: shipping_state
+                  type: VARCHAR(255)
+              - column:
+                  name: shipping_zip_code
+                  type: VARCHAR(255)
+            tableName: order_header
+  - changeSet:
+      id: 1771753040998-2
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_linePK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: quantity_ordered
+                  type: INTEGER
+              - column:
+                  name: order_header_id
+                  type: BIGINT
+              - column:
+                  name: product_id
+                  type: BIGINT
+            tableName: order_line
+  - changeSet:
+      id: 1771753040998-3
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: author_id
+                  type: bigint
+            tableName: book
+  - changeSet:
+      id: 1771753040998-4
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: created_date
+                  type: timestamp(6)
+            tableName: category
+  - changeSet:
+      id: 1771753040998-5
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: created_date
+                  type: timestamp(6)
+            tableName: product
+  - changeSet:
+      id: 1771753040998-6
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: varchar(50)
+            tableName: author
+  - changeSet:
+      id: 1771753040998-7
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: varchar(50)
+            tableName: author
+  - changeSet:
+      id: 1771753040998-8
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: product_status
+                  type: varchar(255)
+            tableName: product
+  - changeSet:
+      id: 1771753040998-9
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: updated_date
+                  type: timestamp(6)
+            tableName: category
+  - changeSet:
+      id: 1771753040998-10
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: updated_date
+                  type: timestamp(6)
+            tableName: product
+  - changeSet:
+      id: 1771753040998-11
+      author: sirmam (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: first_name
+            constraintName: UC_AUTHORFIRST_NAME_COL
+            tableName: author
+  - changeSet:
+      id: 1771753040998-12
+      author: sirmam (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: last_name
+            constraintName: UC_AUTHORLAST_NAME_COL
+            tableName: author
+  - changeSet:
+      id: 1771753040998-13
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_header_id
+            baseTableName: order_line
+            constraintName: FKoujl67v3lk4glhmln31imw1wo
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: order_header
+            validate: true
+  - changeSet:
+      id: 1771753040998-14
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: order_line
+            constraintName: FKpf904tci8garypkvm32cqupye
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: product
+            validate: true
+  - changeSet:
+      id: 1771753040998-17
+      author: sirmam (generated)
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uc_authorfirstname_col
+            tableName: author
+  - changeSet:
+      id: 1771753040998-18
+      author: sirmam (generated)
+      changes:
+        - dropUniqueConstraint:
+            constraintName: uc_authorlastname_col
+            tableName: author
+  - changeSet:
+      id: 1771753040998-19
+      author: sirmam (generated)
+      changes:
+        - dropTable:
+            tableName: OrderHeader
+  - changeSet:
+      id: 1771753040998-20
+      author: sirmam (generated)
+      changes:
+        - dropTable:
+            tableName: OrderLine
+  - changeSet:
+      id: 1771753040998-21
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: authorId
+            tableName: book
+  - changeSet:
+      id: 1771753040998-22
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: createdDate
+            tableName: category
+  - changeSet:
+      id: 1771753040998-23
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: createdDate
+            tableName: product
+  - changeSet:
+      id: 1771753040998-24
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: firstName
+            tableName: author
+  - changeSet:
+      id: 1771753040998-25
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: lastName
+            tableName: author
+  - changeSet:
+      id: 1771753040998-26
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: productStatus
+            tableName: product
+  - changeSet:
+      id: 1771753040998-27
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: updatedDate
+            tableName: category
+  - changeSet:
+      id: 1771753040998-28
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: updatedDate
+            tableName: product
+

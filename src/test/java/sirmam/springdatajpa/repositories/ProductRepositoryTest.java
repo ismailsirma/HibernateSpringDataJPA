@@ -9,6 +9,7 @@ import sirmam.springdatajpa.domain.Category;
 import sirmam.springdatajpa.domain.Product;
 import sirmam.springdatajpa.domain.ProductStatus;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -21,6 +22,9 @@ public class ProductRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Test
     void testGetCategory() {
         Product newProduct = new Product();
@@ -31,6 +35,9 @@ public class ProductRepositoryTest {
         category.setDescription("CATEGORY1");
         Category category2 = new Category();
         category2.setDescription("CATEGORY2");
+
+        categoryRepository.saveAll(List.of(category, category2));
+
         newProduct.setCategories(Set.of(category, category2));
 
         productRepository.save(newProduct);
