@@ -1,16 +1,19 @@
 package sirmam.springdatajpa;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import sirmam.springdatajpa.domain.Product;
+import sirmam.springdatajpa.domain.*;
+import sirmam.springdatajpa.repositories.CustomerRepository;
 import sirmam.springdatajpa.repositories.OrderHeaderRepository;
 import sirmam.springdatajpa.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -26,11 +29,81 @@ public class DataLoadTest {
     OrderHeaderRepository orderHeaderRepository;
 
     @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
     ProductRepository productRepository;
 
+    @Disabled
+    //@Rollback(value = false)
     @Test
     void testDataLoader() {
-        List<Product> products = new ArrayList<>();
+        List<Product> products = loadProducts();
+        Customer customer = loadCustomers();
+
+        int ordersToCreate = 100;
+
+        for (int i = 0; i < ordersToCreate; i++) {
+            System.out.println("Creating order #: " + i);
+            saveOrder(customer, products);
+        }
+
+        orderHeaderRepository.flush();
     }
 
+    private OrderHeader saveOrder(Customer customer, List<Product> products) {
+        Random random = new Random();
+
+        OrderHeader orderHeader = new OrderHeader();
+        orderHeader.setCustomer(customer);
+
+        products.forEach(product -> {
+            OrderLine orderLine = new OrderLine();
+            orderLine.setProduct(product);
+            orderLine.setQuantityOrdered(random.nextInt(20));
+            //orderHeader.getOrderLines().add(orderLine); -> empty order_header_id
+            orderHeader.addOrderLine(orderLine);
+        });
+
+        return orderHeaderRepository.save(orderHeader);
+    }
+
+    private Customer loadCustomers() {
+        return getOrSaveCustomer(TEST_CUSTOMER);
+    }
+
+    private Customer getOrSaveCustomer(String customerName) {
+        return customerRepository.findCustomerByCustomerNameIgnoreCase(customerName)
+                .orElseGet(() -> {
+                    Customer c1 = new Customer();
+                    c1.setCustomerName(customerName);
+                    c1.setEmail("test@example.com");
+                    Address address = new Address();
+                    address.setAddress("123 Main");
+                    address.setCity("New Orleans");
+                    address.setState("LA");
+                    c1.setAddress(address);
+                    return customerRepository.save(c1);
+                });
+    }
+
+    private List<Product> loadProducts() {
+        List<Product> products = new ArrayList<>();
+
+        products.add(getOrSaveProduct(PRODUCT_01));
+        products.add(getOrSaveProduct(PRODUCT_02));
+        products.add(getOrSaveProduct(PRODUCT_03));
+
+        return  products;
+    }
+
+    private Product getOrSaveProduct(String description) {
+        return productRepository.findByDescription(description)
+                .orElseGet(() -> {
+                    Product p1 = new Product();
+                    p1.setDescription(description);
+                    p1.setProductStatus(ProductStatus.NEW);
+                    return productRepository.save(p1);
+                });
+    }
 }

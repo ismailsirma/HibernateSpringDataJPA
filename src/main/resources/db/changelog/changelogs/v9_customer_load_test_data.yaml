@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1771963465812-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: customerPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: city
+                  type: VARCHAR(255)
+              - column:
+                  name: state
+                  type: VARCHAR(255)
+              - column:
+                  name: zip_code
+                  type: VARCHAR(255)
+              - column:
+                  name: customer_name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: phone
+                  type: VARCHAR(255)
+            tableName: customer
+  - changeSet:
+      id: 1771963465812-2
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: customer_id
+                  type: bigint
+            tableName: order_header
+  - changeSet:
+      id: 1771963465812-3
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: order_header
+            constraintName: FKbkj7uhdpxqe8qb2b1g6poijwt
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: customer
+            validate: true
+  - changeSet:
+      id: 1771963465812-4
+      author: sirmam (generated)
+      changes:
+        - dropColumn:
+            columnName: customer
+            tableName: order_header
+

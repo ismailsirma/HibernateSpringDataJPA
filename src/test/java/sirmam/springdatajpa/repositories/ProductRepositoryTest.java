@@ -42,7 +42,7 @@ public class ProductRepositoryTest {
 
         productRepository.save(newProduct);
 
-        Product product = productRepository.findByDescription("PRODUCT1");
+        Product product = productRepository.findByDescription("PRODUCT1").orElse(null);
 
         assertNotNull(product);
         assertNotNull(product.getCategories());
