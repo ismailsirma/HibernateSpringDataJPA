@@ -35,6 +35,16 @@ public class DataLoadTest {
     ProductRepository productRepository;
 
     @Disabled
+    @Test
+    void testLazyVsEager() {
+        OrderHeader orderHeader = orderHeaderRepository.getById(1L);
+
+        System.out.println("order id is: " + orderHeader.getId());
+
+        System.out.println("customer name is: " + orderHeader.getCustomer().getCustomerName()   );
+    }
+
+    @Disabled
     //@Rollback(value = false)
     @Test
     void testDataLoader() {
