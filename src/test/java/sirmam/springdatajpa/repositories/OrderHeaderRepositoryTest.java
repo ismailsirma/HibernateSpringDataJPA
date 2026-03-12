@@ -9,6 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import sirmam.springdatajpa.domain.*;
 
+import java.util.IntSummaryStatistics;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
@@ -25,7 +28,12 @@ class OrderHeaderRepositoryTest {
     @Autowired
     OrderApprovalRepository orderApprovalRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
+
     Product product;
+
+    String TEST_CUSTOMER = "me";
 
     @BeforeEach
     void setUp() {
@@ -111,5 +119,16 @@ class OrderHeaderRepositoryTest {
             OrderHeader fetched = orderHeaderRepository.getById(savedOrder.getId());
             assertNull(fetched);
         });
+    }
+
+    @Test
+    void testN_PlusOneProblem() {
+        Customer customer = customerRepository.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
+
+        IntSummaryStatistics totalOrdered = orderHeaderRepository.findAllByCustomer(customer).stream()
+                .flatMap(orderHeader -> orderHeader.getOrderLines().stream())
+                .collect(Collectors.summarizingInt(ol -> ol.getQuantityOrdered()));
+
+        System.out.println("total ordered: " + totalOrdered.getSum());
     }
 }
