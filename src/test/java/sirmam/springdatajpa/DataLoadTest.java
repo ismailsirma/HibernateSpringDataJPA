@@ -13,6 +13,7 @@ import sirmam.springdatajpa.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @ActiveProfiles("local")
@@ -33,6 +34,24 @@ public class DataLoadTest {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Test
+    void testDBLock() {
+        Long id = 1L;
+
+        // begins a transaction
+        Optional<OrderHeader> orderHeader = orderHeaderRepository.findById(id);
+
+        if (orderHeader.isPresent()) {
+            Address billTo = new Address();
+            billTo.setAddress("Bill me");
+            orderHeader.get().setBillToAddress(billTo);
+            orderHeaderRepository.saveAndFlush(orderHeader.get());
+            // ends the transaction
+
+            System.out.println("I updated the order");
+        }
+    }
 
     @Disabled
     @Test
