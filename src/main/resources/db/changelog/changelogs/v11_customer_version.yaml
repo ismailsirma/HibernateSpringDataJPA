@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1780132268453-1
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: version
+                  type: integer
+            tableName: customer
