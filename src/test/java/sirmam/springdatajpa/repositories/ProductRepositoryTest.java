@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import sirmam.springdatajpa.domain.Category;
 import sirmam.springdatajpa.domain.Product;
 import sirmam.springdatajpa.domain.ProductStatus;
+import sirmam.springdatajpa.services.ProductService;
 
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("local")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ComponentScan(basePackageClasses = { ProductService.class })
 public class ProductRepositoryTest {
 
     @Autowired
@@ -24,6 +27,9 @@ public class ProductRepositoryTest {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    ProductService productService;
 
     @Test
     void testGetCategory() {
@@ -70,11 +76,9 @@ public class ProductRepositoryTest {
         product.setDescription("My Product");
         product.setProductStatus(ProductStatus.NEW);
 
-        Product savedProduct = productRepository.saveAndFlush(product);
+        Product savedProduct = productService.saveProduct(product);
 
-        savedProduct.setQuantityOnHand(25);
-
-        Product savedProduct2 = productRepository.saveAndFlush(savedProduct);
+        Product savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
 
         System.out.println(savedProduct2.getQuantityOnHand());
     }
