@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1780210985637-1
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: quantity_on_hand
+                  type: integer
+            tableName: product
