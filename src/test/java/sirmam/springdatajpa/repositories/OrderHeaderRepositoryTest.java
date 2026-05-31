@@ -47,7 +47,9 @@ class OrderHeaderRepositoryTest {
     void testSaveOrderWithLine() {
         OrderHeader orderHeader = new OrderHeader();
         Customer customer = new Customer();
-        orderHeader.setCustomer(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        orderHeader.setCustomer(savedCustomer);
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
@@ -98,6 +100,9 @@ class OrderHeaderRepositoryTest {
     void testDeleteCascade() {
 
         OrderHeader orderHeader = new OrderHeader();
+        Customer customer = new Customer();
+        customer.setCustomerName("new Customer");
+        orderHeader.setCustomer(customerRepository.save(customer));
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(3);

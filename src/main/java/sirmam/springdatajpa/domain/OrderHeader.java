@@ -37,6 +37,8 @@ import java.util.Set;
 })
 public class OrderHeader extends BaseEntity {
 
+    @Version
+    private Integer version;
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     @Embedded
@@ -120,6 +122,14 @@ public class OrderHeader extends BaseEntity {
 
     public void setOrderlines(Set<OrderLine> orderlines) {
         this.orderLines = orderlines;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

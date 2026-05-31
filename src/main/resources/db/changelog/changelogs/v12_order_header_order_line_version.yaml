@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1780208748934-1
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: version
+                  type: integer
+            tableName: order_header
+  - changeSet:
+      id: 1780208748934-2
+      author: sirmam (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: version
+                  type: integer
+            tableName: order_line
