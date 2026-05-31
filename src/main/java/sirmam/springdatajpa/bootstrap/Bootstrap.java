@@ -3,8 +3,12 @@ package sirmam.springdatajpa.bootstrap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import sirmam.springdatajpa.domain.Customer;
+import sirmam.springdatajpa.domain.Product;
+import sirmam.springdatajpa.domain.ProductStatus;
 import sirmam.springdatajpa.repositories.CustomerRepository;
+import sirmam.springdatajpa.services.ProductService;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -16,8 +20,26 @@ public class Bootstrap implements CommandLineRunner {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    ProductService productService;
+
+    private void updateProduct(){
+        Product product = new Product();
+        product.setDescription("My Product");
+        product.setProductStatus(ProductStatus.NEW);
+
+        Product savedProduct = productService.saveProduct(product);
+
+        Product savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
+
+        System.out.println(savedProduct2.getQuantityOnHand());
+    }
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
+
+        updateProduct();
+
         // Transactional Proxy mode - external method calls works fine
         bootstrapOrderService.readOrderData();
 
