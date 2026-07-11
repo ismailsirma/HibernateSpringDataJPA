@@ -82,6 +82,14 @@ class OrderHeaderRepositoryTest {
     void testSaveOrder() {
         OrderHeader orderHeader = new OrderHeader();
         Customer customer = new Customer();
+        customer.setCustomerName("New Customer");
+        customer.setPhone("123124389");
+
+        Address address = new Address();
+        address.setCity("New York");
+        address.setAddress("12312432342");
+        customer.setAddress(address);
+
         orderHeader.setCustomer(customer);
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
