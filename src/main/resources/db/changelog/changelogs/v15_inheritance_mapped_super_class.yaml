@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1784391706555-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_header_inheritancePK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: customer_name
+                  type: VARCHAR(255)
+            tableName: order_header_inheritance
