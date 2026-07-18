@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1784391412597-1
+      author: sirmam (generated)
+      changes:
+        - modifyDataType:
+            columnName: address
+            newDataType: varchar(30)
+            tableName: customer
+  - changeSet:
+      id: 1784391412597-2
+      author: sirmam (generated)
+      changes:
+        - modifyDataType:
+            columnName: customer_name
+            newDataType: varchar(50)
+            tableName: customer
+  - changeSet:
+      id: 1784391412597-3
+      author: sirmam (generated)
+      changes:
+        - modifyDataType:
+            columnName: phone
+            newDataType: varchar(20)
+            tableName: customer
