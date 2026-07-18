@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1784394297070-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: catPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: body_temp
+                  type: INTEGER
+              - column:
+                  name: species
+                  type: VARCHAR(255)
+              - column:
+                  name: breed
+                  type: VARCHAR(255)
+            tableName: cat
+  - changeSet:
+      id: 1784394297070-2
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: dolphinPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: body_temp
+                  type: INTEGER
+              - column:
+                  name: species
+                  type: VARCHAR(255)
+              - column:
+                  name: has_spots
+                  type: BOOLEAN
+            tableName: dolphin
+  - changeSet:
+      id: 1784394297070-3
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: hibernate_sequencesPK
+                  name: sequence_name
+                  type: VARCHAR(255)
+              - column:
+                  name: next_val
+                  type: BIGINT
+            tableName: hibernate_sequences
