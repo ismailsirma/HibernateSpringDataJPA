@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1784395676584-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: vehicle_type
+                  type: VARCHAR(31)
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: vehiclePK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: payload
+                  type: INTEGER
+              - column:
+                  name: trim_level
+                  type: VARCHAR(255)
+            tableName: vehicle
