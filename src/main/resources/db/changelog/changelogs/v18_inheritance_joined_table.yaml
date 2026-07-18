@@ -1,0 +1,106 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1784399840851-1
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: number_of_pickups
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: electric_guitarPK
+                  name: id
+                  type: BIGINT
+            tableName: electric_guitar
+  - changeSet:
+      id: 1784399840851-2
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: number_of_strings
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: guitarPK
+                  name: id
+                  type: BIGINT
+            tableName: guitar
+  - changeSet:
+      id: 1784399840851-3
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: instrumentPK
+                  name: id
+                  type: BIGINT
+            tableName: instrument
+  - changeSet:
+      id: 1784399840851-4
+      author: sirmam (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: number_of_keys
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pianoPK
+                  name: id
+                  type: BIGINT
+            tableName: piano
+  - changeSet:
+      id: 1784399840851-5
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: electric_guitar
+            constraintName: FKapwrk3c6ipnbbums5cd8vreyi
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: guitar
+            validate: true
+  - changeSet:
+      id: 1784399840851-6
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: guitar
+            constraintName: FKe4lgeef8l3gwsx63rblhmqem5
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: instrument
+            validate: true
+  - changeSet:
+      id: 1784399840851-7
+      author: sirmam (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: piano
+            constraintName: FKtbjtuxcuryfxx7jl6lk3n09pm
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: instrument
+            validate: true

@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import sirmam.springdatajpa.domain.Customer;
 import sirmam.springdatajpa.domain.Product;
 import sirmam.springdatajpa.domain.ProductStatus;
+import sirmam.springdatajpa.domain.joinedtable.ElectricGuitar;
 import sirmam.springdatajpa.repositories.CustomerRepository;
+import sirmam.springdatajpa.repositories.ElectricGuitarRepository;
 import sirmam.springdatajpa.services.ProductService;
 
 @Component
@@ -22,6 +24,9 @@ public class Bootstrap implements CommandLineRunner {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ElectricGuitarRepository electricGuitarRepository;
 
     private void updateProduct(){
         Product product = new Product();
@@ -59,6 +64,11 @@ public class Bootstrap implements CommandLineRunner {
 
         System.out.println("Version is: " + savedCustomer3.getVersion());
         customerRepository.deleteById(savedCustomer3.getId());
+
+        ElectricGuitar eg = new ElectricGuitar();
+        eg.setNumberOfStrings(6);
+        eg.setNumberOfPickups(2);
+        electricGuitarRepository.save(eg);
 
         System.out.println("I was called!");
     }
