@@ -1,21 +1,32 @@
 HELP.md
+.gradle
 **/.gradle
+build/
 **/build/
+!gradle/wrapper/gradle-wrapper.jar
 !**/gradle/wrapper/gradle-wrapper.jar
-!**/**/src/main/**/build/
-!**/**/src/test/**/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### STS ###
+.apt_generated
 **/.apt_generated
+.classpath
 **/.classpath
+.factorypath
 **/.factorypath
+.project
 **/.project
+.settings
 **/.settings
+.springBeans
 **/.springBeans
+.sts4-cache
 **/.sts4-cache
+bin/
 **/bin/
-!**/**/src/main/**/bin/
-!**/**/src/test/**/bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
 .idea
@@ -26,17 +37,18 @@ HELP.md
 **/*.iml
 *.ipr
 **/*.ipr
+out/
 **/out/
-!**/**/src/main/**/out/
-!**/**/src/test/**/out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
 ### NetBeans ###
-**/nbproject/private/
-**/nbbuild/
-**/dist/
-**/nbdist/
-**/.nb-gradle/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
 ### VS Code ###
-**/.vscode/
+.vscode/
 **/.vscode/
