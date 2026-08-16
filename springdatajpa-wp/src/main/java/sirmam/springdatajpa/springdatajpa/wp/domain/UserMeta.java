@@ -1,6 +1,7 @@
 package sirmam.springdatajpa.springdatajpa.wp.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class UserMeta {
     @Column(name = "umeta_id")
     private Long id;
     private Long userId;
+    @Size(max = 255)
     private String metaKey;
 
     @Lob
