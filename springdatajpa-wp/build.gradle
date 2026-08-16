@@ -43,6 +43,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	compileOnly 'org.projectlombok:lombok:1.18.46'
+	annotationProcessor 'org.projectlombok:lombok:1.18.46'
+
 	liquibaseRuntime sourceSets.main.output
 	liquibaseRuntime sourceSets.main.runtimeClasspath
 	liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseVersion}"
