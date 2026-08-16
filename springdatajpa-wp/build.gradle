@@ -38,7 +38,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-liquibase'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'mysql:mysql-connector-java:8.0.33'
+	implementation 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -64,9 +64,9 @@ liquibase {
 		main {
 			//propertyFile 'liquibase.properties'
 			changelogFile 'src/main/resources/db/changelog/changelog-master.yaml'
-			url 'jdbc:mysql://localhost:3306/springdatajpawp'
-			username 'root'
-			password 'root'
+			url 'jdbc:mysql://localhost:3306/wp?useSSL=false&userUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC'
+			username 'wpadmin'
+			password 'password'
 			driver 'com.mysql.cj.jdbc.Driver'
 			// reference = the Hibernate model, scanned from the com.example package (like the
 			// hibernate:spring: URL Spring Boot apps use). CamelCase->underscore naming so the
